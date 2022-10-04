@@ -1,4 +1,4 @@
-#Formule des nombre premiers
+#Formule des nombres premiers
 from sympy.ntheory import isprime
 
 #Choisi d'une liste de nombres premiers à partir des nombres donnés par l'ultilisateur
