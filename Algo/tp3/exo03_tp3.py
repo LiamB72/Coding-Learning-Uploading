@@ -1,4 +1,4 @@
 def somme(a,b):
 	s = a+b
-	return(s)
+	return s
 print(somme(3,5))
