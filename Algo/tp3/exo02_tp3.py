@@ -1,4 +1,4 @@
-def afficheTexte (Gérard):
-	print('bonjour', Gérard)
+def afficheTexte (prenom):
+	print('bonjour', prenom)
 
 afficheTexte('Gérard')
