@@ -12,16 +12,16 @@ tiles=[]       #liste d'images tiles
 
 #variables de gestion du pacman
 pacX=12          #position x y du pacman dans le niveau
-pacY=8
+pacY=12
 compteurBilles=0
 
 #variables de gestion du fantome
-FRAMERATE_FANTOME= 50      #vitesse du fantome chiffre elevé = vitesse lente
-NB_DEPLACEMENT_FANTOME = 6   #le fantome se deplace sur 9 cases
+FRAMERATE_FANTOME= 25      #vitesse du fantome chiffre elevé = vitesse lente
+NB_DEPLACEMENT_FANTOME = 17   #le fantome se deplace sur 9 cases
 positionFantome=1
 frameRateCounterFantome=0
-posfX=4     #position initiale du fantome
-posfY=2
+posfX=24     #position initiale du fantome
+posfY=18
 
 #definition du niveau
 
@@ -57,11 +57,11 @@ fantome=[[  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
-        [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
+        [   0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,11,0,14,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,5,4,0,0,0,0,0,0,0,0     ],
-        [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
+        [   0,0,0,0,0,0,0,0,0,0,0,0,0,12,8,9,7,13,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,6,1,0,0,0,0,0,0,0,0     ],
-        [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
+        [   0,0,0,0,0,0,0,0,0,0,0,0,0,16,0,10,0,17,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ],
         [   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0     ]]
 
