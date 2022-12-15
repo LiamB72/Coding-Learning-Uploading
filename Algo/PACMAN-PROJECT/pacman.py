@@ -1,5 +1,5 @@
 """
-Program by Liam BERGE 1G04
+Program by that's lame
 """
 import pygame
 from pygame.locals import *
@@ -123,11 +123,20 @@ def afficheNiveau(niveau):
             fenetre.blit(tiles[niveau[y][x]],(x*TITLE_SIZE,y*TITLE_SIZE))
 
 
-def affichePac(numero):
+def affichePac(numero, movement, sens):
     """
     affiche le pacman en position pacX et pacY
     """
-    fenetre.blit(tiles[numero],(pacX * TITLE_SIZE,pacY * TITLE_SIZE))
+    if sens==0:
+        fenetre.blit(tiles[numero],(pacX * TITLE_SIZE,pacY * TITLE_SIZE - movement))
+    elif sens==1:
+        fenetre.blit(tiles[numero],(pacX * TITLE_SIZE,pacY * TITLE_SIZE + movement))
+    elif sens==2:
+        fenetre.blit(tiles[numero],(pacX * TITLE_SIZE + movement,pacY * TITLE_SIZE))
+    elif sens==3:
+        fenetre.blit(tiles[numero],(pacX * TITLE_SIZE - movement,pacY * TITLE_SIZE))
+    else:
+        fenetre.blit(tiles[numero],(pacX * TITLE_SIZE,pacY * TITLE_SIZE))
 
 def afficheScore(score):
     """
@@ -210,25 +219,28 @@ mixer.music.load('data/bg-music.wav')
 mixer.music.play()
 mixer.music.set_volume(0.1)
 
+#######################################################################################################################################
+#Keys Settings
+#######################################################################################################################################
+flagMove = False
+cptMove = 0
+orientationMove = -1
+
 loop=True
 while loop==True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False                    #fermeture de la fenetre (croix rouge)
-
-#######################################################################################################################################
-#Keys Settings
-#######################################################################################################################################
-        elif event.type == pygame.KEYDOWN:  #une touche a été pressée...laquelle ?
-
-
+        elif event.type == pygame.KEYDOWN and flagMove == False:  #une touche a été pressée...laquelle ?
             if event.unicode == 'z':
                 posY = pacY - 1
                 posX = pacX
                 numeroTile = niveau[posY][posX]
                 print("key_up, tile:",numeroTile,end=' ')
                 if (numeroTile == 12 or numeroTile == 0 or numeroTile == 16 or numeroTile == 27 or numeroTile == 28):
-                    pacY -= 1
+                    orientationMove = 0
+                    flagMove = True
+                    #pacY -= 1
                     print("position:",pacX,pacY)
                 else:
                     print("Not possible. position:",pacX,pacY)
@@ -241,7 +253,9 @@ while loop==True:
                 numeroTile = niveau[posY][posX]
                 print("key_down, tile:",numeroTile,end=' ')
                 if (numeroTile == 12 or numeroTile == 0 or numeroTile == 16 or numeroTile == 27 or numeroTile == 28):
-                    pacY += 1
+                    #pacY += 1
+                    orientationMove = 1
+                    flagMove = True
                     print("position:",pacX,pacY)
                 else:
                     print("Not possible. position:",pacX,pacY)
@@ -253,8 +267,10 @@ while loop==True:
                 posX = pacX + 1
                 numeroTile = niveau[posY][posX]       #on regarde le numéro du tile
                 print("key_right, tile:",numeroTile,end=' ')
-                if (numeroTile == 12 or numeroTile == 0 or numeroTile == 16 or numeroTile == 17 or numeroTile == 18 or numeroTile == 27 or numeroTile == 28):   #si le tile est une bille ou un fond noir alors le déplacement est possible
-                    pacX += 1                               #on monte donc il faut décrémenter pacY
+                if (numeroTile == 12 or numeroTile == 0 or numeroTile == 16 or numeroTile == 17 or numeroTile == 18 or numeroTile == 27 or numeroTile == 28):
+                    #pacX += 1
+                    orientationMove = 2
+                    flagMove = True
                     print("position:",pacX,pacY)
                 else:
                     print("Not possible. position:",pacX,pacY)
@@ -265,8 +281,10 @@ while loop==True:
                 posX = pacX - 1
                 numeroTile = niveau[posY][posX]       #on regarde le numéro du tile
                 print("key_left, tile:",numeroTile,end=' ')
-                if (numeroTile == 12 or numeroTile == 0 or numeroTile == 16 or numeroTile == 17 or numeroTile == 18 or numeroTile == 27 or numeroTile == 28):   #si le tile est une bille ou un fond noir alors le déplacement est possible
-                    pacX -= 1                               #on monte donc il faut décrémenter pacY
+                if (numeroTile == 12 or numeroTile == 0 or numeroTile == 16 or numeroTile == 17 or numeroTile == 18 or numeroTile == 27 or numeroTile == 28):
+                    #pacX -= 1
+                    orientationMove = 3
+                    flagMove = True
                     print("position:",pacX,pacY)
                 else:
                     print("Not possible. position:",pacX,pacY)
@@ -291,9 +309,36 @@ while loop==True:
                 pacX = 0
 
 
+    if flagMove == True:
+        cptMove += 1
+        if orientationMove == 0:
+            if cptMove == 32:
+                flagMove = False
+                pacY -= 1
+                cptMove = 0
+                orientationMove = -1
+        if orientationMove == 1:
+            if cptMove == 32:
+                flagMove = False
+                pacY += 1
+                cptMove = 0
+                orientationMove = -1
+        if orientationMove == 2:
+            if cptMove == 32:
+                flagMove = False
+                pacX += 1
+                cptMove = 0
+                orientationMove = -1
+        if orientationMove == 3:
+            if cptMove == 32:
+                flagMove = False
+                pacX -= 1
+                cptMove = 0
+                orientationMove = -1
+
     fenetre.fill((0,0,0))   #efface la fenetre
     afficheNiveau(niveau)   #affiche le niveau
-    if event.type == pygame.KEYDOWN:
+    if event.type == pygame.KEYDOWN and flagMove == True:
         if event.unicode == 'z':
             orientation = 21
         if event.unicode == 's':
@@ -302,7 +347,7 @@ while loop==True:
             orientation = 14
         if event.unicode == 'q':
             orientation = 20
-    affichePac(orientation)
+    affichePac(orientation, cptMove, orientationMove)
     afficheVie(life)
     deplaceFantome(fantome) #mettre un commentaire pour desactiver le déplacement du fantome
     afficheScore(compteurBilles)
